@@ -1,6 +1,23 @@
-import { ReceiptText, File, Vote, UsersRound } from "lucide-svelte";
+import { LayoutDashboard, ReceiptText, File, Vote, UsersRound, Settings, LogOut } from "lucide-svelte";
 const sidebarItems = {
-  navMain: [
+  options: [
+    {
+      title: "Configurações",
+      url: "/",
+      icon: Settings,
+    },
+    {
+      title: "Sair da conta",
+      url: "/login",
+      icon: LogOut
+    },
+  ],
+  navigation: [
+    {
+      title: "Dashboard",
+      url: "/",
+      icon: LayoutDashboard,
+    },
     {
       title: "Faturas",
       url: "/",

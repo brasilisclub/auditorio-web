@@ -1,9 +1,9 @@
 <script lang="ts">
   import sidebarItems from "./sidebar-items";
   import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-  import GalleryVerticalEnd from "lucide-svelte/icons/gallery-vertical-end";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import type { ComponentProps } from "svelte";
-
+  import { LogOut, Settings, ChevronsUpDown } from "lucide-svelte";
   let {
     ref = $bindable(null),
     ...restProps
@@ -11,30 +11,54 @@
 </script>
 
 <Sidebar.Root {...restProps}>
-  <Sidebar.Header>
-    <Sidebar.Menu>
-      <Sidebar.MenuItem class="p-2">
-        <a href="/">
-          <div class="flex flex-col gap-0.5 leading-none">
-            <span class="text-3xl font-semibold">Auditório</span>
-          </div>
-        </a>
+  <Sidebar.Header class="h-16 border-b">
+    <Sidebar.Menu class="h-full flex justify-center">
+      <Sidebar.MenuItem class="px-2">
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            {#snippet child({ props })}
+              <Sidebar.MenuButton
+                {...props}
+                class="border data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              >
+                <span class="flex gap-2">
+                  <img src="/logo.svg" alt="Logo" width="20" />
+                  Brasilis Club
+                </span>
+                <ChevronsUpDown class="ml-auto" />
+              </Sidebar.MenuButton>
+            {/snippet}
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content
+            side="top"
+            class="w-[--bits-dropdown-menu-anchor-width]"
+          >
+            {#each sidebarItems.options as option (option.title)}
+              <DropdownMenu.Item>
+                <a href={option.url} class="flex gap-2 items-center">
+                  <option.icon class="size-4" />
+                  {option.title}
+                </a>
+              </DropdownMenu.Item>
+            {/each}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </Sidebar.MenuItem>
     </Sidebar.Menu>
   </Sidebar.Header>
   <Sidebar.Content>
     <Sidebar.Group>
       <Sidebar.Menu class="gap-2">
-        {#each sidebarItems.navMain as mainItem (mainItem.title)}
+        {#each sidebarItems.navigation as navItem (navItem.title)}
           <Sidebar.MenuItem>
-            <Sidebar.MenuButton class="text-base" size="lg">
+            <Sidebar.MenuButton>
               {#snippet child({ props })}
                 <div class="flex items-center gap-2">
-                  <a href={mainItem.url} {...props}>
-                    {#if mainItem.icon}
-                      <mainItem.icon class="size-4" />
+                  <a href={navItem.url} {...props}>
+                    {#if navItem.icon}
+                      <navItem.icon class="size-4" />
                     {/if}
-                    {mainItem.title}
+                    {navItem.title}
                   </a>
                 </div>
               {/snippet}

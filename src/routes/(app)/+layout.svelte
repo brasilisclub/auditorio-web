@@ -6,7 +6,7 @@
   let { children } = $props();
 </script>
 
-<Sidebar.Provider style="--sidebar-width: 19rem;">
+<Sidebar.Provider style="--sidebar-width: 15rem;">
   <AppSidebar />
   <Sidebar.Inset>
     {@render children()}
